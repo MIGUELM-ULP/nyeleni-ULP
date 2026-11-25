@@ -130,7 +130,7 @@ footer p{margin:5px;font-size:14px}
     <div class="music-player-art" aria-hidden="true">♫</div>
     <div class="music-player-info">
       <div class="music-player-label">Ambiente Nyéléni</div>
-      <div class="music-player-title" id="musicTrackTitle">Lofi chill instrumental</div>
+      <div class="music-player-title" id="musicTrackTitle">Chill Pop — Kulakovka</div>
       <div class="music-player-status" id="musicStatus" aria-live="polite">Listo para reproducir</div>
     </div>
     <button type="button" class="music-toggle-size" id="musicMinimize" aria-label="Minimizar reproductor" title="Minimizar">─</button>
@@ -146,6 +146,8 @@ footer p{margin:5px;font-size:14px}
       <input id="musicVolume" type="range" min="0" max="1" step="0.05" value="0.25">
     </label>
   </div>
+
+  <audio id="backgroundMusic" src="https://github.com/MIGUELM-ULP/nyeleni-ULP/raw/refs/heads/main/chill.mp3.mp3" loop preload="metadata" playsinline></audio>
 </aside>
 
 <nav>
@@ -525,108 +527,35 @@ footer p{margin:5px;font-size:14px}
 <script>
 (() => {
   const player = document.getElementById("musicPlayer");
+  const audio = document.getElementById("backgroundMusic");
   const playButton = document.getElementById("musicPlay");
   const minimizeButton = document.getElementById("musicMinimize");
   const status = document.getElementById("musicStatus");
   const volume = document.getElementById("musicVolume");
 
-  let ctx = null;
-  let masterGain = null;
-  let timerId = null;
-  let isPlaying = false;
-  let step = 0;
+  if (!audio) return;
+  audio.volume = Number(volume.value);
 
-  // Progresión lo-fi suave en Fmaj7 -> Em7 -> Dm7 -> Cmaj7 (en Hz)
-  const chords = [
-    [174.61, 220.00, 261.63, 329.63], // Fmaj7
-    [164.81, 196.00, 246.94, 293.66], // Em7
-    [146.83, 174.61, 220.00, 261.63], // Dm7
-    [130.81, 164.81, 196.00, 246.94]  // Cmaj7
-  ];
-
-  const melodyNotes = [
-    329.63, 392.00, 440.00, 392.00,
-    293.66, 329.63, 392.00, 329.63,
-    261.63, 293.66, 349.23, 329.63,
-    246.94, 261.63, 329.63, 293.66
-  ];
-
-  function ensureAudio() {
-    if (!ctx) {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      ctx = new AudioCtx();
-      masterGain = ctx.createGain();
-      masterGain.gain.value = Number(volume.value) * 0.25;
-      masterGain.connect(ctx.destination);
-    }
-    if (ctx.state === "suspended") {
-      ctx.resume();
-    }
+  function updatePlayingState(isPlaying) {
+    playButton.textContent = isPlaying ? "❚❚" : "▶";
+    playButton.setAttribute("aria-label", isPlaying ? "Pausar música" : "Reproducir música");
+    playButton.title = isPlaying ? "Pausar" : "Reproducir";
   }
 
-  function playSoftNote(freq, duration, type = "sine", peakGain = 0.14) {
-    if (!ctx || !masterGain) return;
-    const now = ctx.currentTime;
-    const osc = ctx.createOscillator();
-    const filter = ctx.createBiquadFilter();
-    const gain = ctx.createGain();
-
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, now);
-
-    filter.type = "lowpass";
-    filter.frequency.setValueAtTime(1150, now);
-
-    gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.linearRampToValueAtTime(peakGain, now + 0.08);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-
-    osc.connect(filter);
-    filter.connect(gain);
-    gain.connect(masterGain);
-
-    osc.start(now);
-    osc.stop(now + duration + 0.05);
-  }
-
-  function tick() {
-    if (!isPlaying) return;
-    const chordIndex = Math.floor(step / 4) % chords.length;
-    if (step % 4 === 0) {
-      chords[chordIndex].forEach(f => playSoftNote(f, 2.3, "triangle", 0.065));
-    }
-    const note = melodyNotes[step % melodyNotes.length];
-    playSoftNote(note, 0.75, "sine", 0.11);
-    step++;
-  }
-
-  function updateUI(playing) {
-    isPlaying = playing;
-    playButton.textContent = playing ? "❚❚" : "▶";
-    playButton.setAttribute("aria-label", playing ? "Pausar música" : "Reproducir música");
-    playButton.title = playing ? "Pausar" : "Reproducir";
-    status.textContent = playing ? "Reproduciendo en bucle" : "En pausa";
-  }
-
-  function startPlayback() {
-    ensureAudio();
-    updateUI(true);
-    tick();
-    clearInterval(timerId);
-    timerId = setInterval(tick, 620);
-  }
-
-  function stopPlayback() {
-    clearInterval(timerId);
-    timerId = null;
-    updateUI(false);
-  }
-
-  playButton.addEventListener("click", () => {
-    if (isPlaying) {
-      stopPlayback();
+  playButton.addEventListener("click", async () => {
+    if (audio.paused) {
+      try {
+        await audio.play();
+        updatePlayingState(true);
+        status.textContent = "Reproduciendo en bucle";
+      } catch (err) {
+        updatePlayingState(false);
+        status.textContent = "No se pudo reproducir el audio";
+      }
     } else {
-      startPlayback();
+      audio.pause();
+      updatePlayingState(false);
+      status.textContent = "En pausa";
     }
   });
 
@@ -638,9 +567,22 @@ footer p{margin:5px;font-size:14px}
   });
 
   volume.addEventListener("input", () => {
-    if (masterGain && ctx) {
-      masterGain.gain.setTargetAtTime(Number(volume.value) * 0.25, ctx.currentTime, 0.03);
-    }
+    audio.volume = Number(volume.value);
+  });
+
+  audio.addEventListener("play", () => {
+    updatePlayingState(true);
+    status.textContent = "Reproduciendo en bucle";
+  });
+
+  audio.addEventListener("pause", () => {
+    updatePlayingState(false);
+    if (!audio.ended) status.textContent = "En pausa";
+  });
+
+  audio.addEventListener("error", () => {
+    updatePlayingState(false);
+    status.textContent = "Error al cargar el enlace del audio";
   });
 })();
 </script>
