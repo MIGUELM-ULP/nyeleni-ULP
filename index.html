@@ -103,74 +103,55 @@ footer p{margin:5px;font-size:14px}
 @media(max-width:800px){nav{justify-content:center}nav ul{justify-content:center}.intro-grid,.colombia-grid{grid-template-columns:1fr}section{padding:55px 6%}.hero{min-height:500px}.definition-box{padding:25px}.academic-intro{padding:45px 6%}.academic-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){nav ul{gap:10px}nav a{font-size:12px}.hero p{font-size:17px}.comparison table{min-width:650px}.academic-grid{grid-template-columns:1fr}.academic-quote{grid-column:auto}.academic-topline{align-items:flex-start;flex-direction:column}.academic-item,.academic-quote{padding:18px}}
 
-/* REPRODUCTOR MUSICAL NYÉLÉNI */
-.music-player{
-  position:fixed;
-  right:22px;
-  bottom:22px;
-  z-index:2000;
-  width:min(340px,calc(100vw - 28px));
-  padding:15px;
-  color:#fff;
-  background:linear-gradient(135deg,#1d3928,#315c3b);
-  border:1px solid #ffffff2b;
-  border-radius:18px;
-  box-shadow:0 10px 30px #0004;
-  font-family:Arial,Helvetica,sans-serif;
-}
-.music-player-top{display:flex;align-items:center;gap:11px;margin-bottom:12px}
-.music-player-art{
-  width:43px;height:43px;flex:0 0 43px;
-  display:grid;place-items:center;border-radius:13px;
-  color:#1d3928;background:#d6b77b;font-size:21px;
-}
+/* REPRODUCTOR MUSICAL NYÉLÉNI (COMPACTO Y CUADRADO) */
+.music-player{position:fixed;right:18px;bottom:18px;z-index:2000;width:min(285px,calc(100vw - 24px));padding:12px 14px;color:#fff;background:linear-gradient(135deg,#1d3928,#315c3b);border:1px solid #ffffff2b;border-radius:16px;box-shadow:0 8px 24px #00000045;font-family:Arial,Helvetica,sans-serif}
+.music-player.is-minimized{width:auto;padding:8px 12px;border-radius:999px}
+.music-player.is-minimized .music-player-body{display:none}
+.music-player-top{display:flex;align-items:center;gap:10px}
+.music-player-art{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;border-radius:10px;color:#1d3928;background:#d6b77b;font-size:17px}
 .music-player-info{min-width:0;flex:1}
-.music-player-label{color:#e4c98f;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
-.music-player-title{margin-top:3px;overflow:hidden;color:#fff;font-size:14px;font-weight:700;text-overflow:ellipsis;white-space:nowrap}
-.music-player-status{margin-top:3px;color:#dce8dc;font-size:11px}
-.music-player-controls{display:flex;align-items:center;justify-content:center;gap:12px}
-.music-player-controls button{
-  display:grid;place-items:center;width:38px;height:38px;
-  border:1px solid #ffffff35;border-radius:50%;color:#fff;
-  background:#ffffff16;font-size:15px;cursor:pointer;transition:.2s;
-}
-.music-player-controls button:hover{color:#1d3928;background:#d6b77b;transform:translateY(-2px)}
-.music-player-controls #musicPlay{
-  width:46px;height:46px;border:0;color:#203927;
-  background:#d6b77b;font-size:18px;
-}
-.music-player-controls #musicPlay:hover{background:#fff}
-.music-volume{display:flex;align-items:center;gap:9px;margin-top:12px;color:#e9eee8;font-size:12px}
+.music-player-label{color:#e4c98f;font-size:9px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}
+.music-player-title{margin-top:1px;overflow:hidden;color:#fff;font-size:13px;font-weight:700;text-overflow:ellipsis;white-space:nowrap}
+.music-player-status{margin-top:2px;color:#dce8dc;font-size:11px;line-height:1.3}
+.music-toggle-size{background:#ffffff18;border:1px solid #ffffff30;color:#fff;border-radius:8px;width:26px;height:26px;cursor:pointer;font-size:12px;display:grid;place-items:center}
+.music-toggle-size:hover{background:#d6b77b;color:#1d3928}
+.music-player-body{margin-top:10px}
+.music-player-controls{display:flex;align-items:center;justify-content:center}
+.music-player-controls button{display:grid;place-items:center;width:38px;height:38px;border:0;border-radius:50%;color:#203927;background:#d6b77b;font-size:15px;cursor:pointer;transition:.2s}
+.music-player-controls button:hover{background:#fff;transform:scale(1.05)}
+.music-volume{display:flex;align-items:center;gap:8px;margin-top:10px;color:#e9eee8;font-size:11px}
 .music-volume input{width:100%;accent-color:#d6b77b;cursor:pointer}
-@media(max-width:520px){
-  .music-player{right:12px;bottom:12px;padding:12px}
-}
 </style>
 </head>
 <body>
 
-<!-- REPRODUCTOR MUSICAL -->
-<aside class="music-player" aria-label="Reproductor de música ambiental">
+<aside class="music-player" id="musicPlayer" aria-label="Reproductor de música ambiental">
   <div class="music-player-top">
     <div class="music-player-art" aria-hidden="true">♫</div>
     <div class="music-player-info">
       <div class="music-player-label">Ambiente Nyéléni</div>
       <div class="music-player-title" id="musicTrackTitle">Lofi chill instrumental</div>
-      <div class="music-player-status" id="musicStatus" aria-live="polite">Intentando iniciar la música automáticamente…</div>
+      <div class="music-player-status" id="musicStatus" aria-live="polite">Listo para reproducir</div>
     </div>
+    <button type="button" class="music-toggle-size" id="musicMinimize" aria-label="Minimizar reproductor" title="Minimizar">─</button>
   </div>
 
-  <div class="music-player-controls">
-    <button type="button" id="musicPlay" aria-label="Reproducir música" title="Reproducir">▶</button>
+  <div class="music-player-body">
+    <div class="music-player-controls">
+      <button type="button" id="musicPlay" aria-label="Reproducir música" title="Reproducir">▶</button>
+    </div>
+    <label class="music-volume" for="musicVolume">
+      <span aria-hidden="true">🔉</span>
+      <span>Volumen</span>
+      <input id="musicVolume" type="range" min="0" max="1" step="0.05" value="0.25">
+    </label>
   </div>
 
-  <label class="music-volume" for="musicVolume">
-    <span aria-hidden="true">🔉</span>
-    <span>Volumen</span>
-    <input id="musicVolume" type="range" min="0" max="1" step="0.05" value="0.25">
-  </label>
-
-  <audio id="backgroundMusic" preload="metadata"></audio>
+  <!-- Primero intenta archivo local ambiente-nyeleni.mp3; si no existe en GitHub, usa pista instrumental de respaldo -->
+  <audio id="backgroundMusic" loop preload="metadata" playsinline>
+    <source src="ambiente-nyeleni.mp3" type="audio/mpeg">
+    <source src="https://upload.wikimedia.org/wikipedia/commons/transcoded/4/45/Gymnop%C3%A9die_No._1.ogg/Gymnop%C3%A9die_No._1.ogg.mp3" type="audio/mpeg">
+  </audio>
 </aside>
 
 <nav>
@@ -549,78 +530,45 @@ footer p{margin:5px;font-size:14px}
 
 <script>
 (() => {
+  const player = document.getElementById("musicPlayer");
   const audio = document.getElementById("backgroundMusic");
   const playButton = document.getElementById("musicPlay");
+  const minimizeButton = document.getElementById("musicMinimize");
   const status = document.getElementById("musicStatus");
   const volume = document.getElementById("musicVolume");
 
-  // El MP3 debe estar en la misma carpeta que index.html.
-  audio.src = "velariomusic-lofi-chill-581723.mp3";
-  audio.loop = true;
-  audio.autoplay = true;
-  audio.preload = "auto";
   audio.volume = Number(volume.value);
 
-  function updateButton(isPlaying) {
+  function updatePlayingState(isPlaying) {
     playButton.textContent = isPlaying ? "❚❚" : "▶";
-    playButton.setAttribute(
-      "aria-label",
-      isPlaying ? "Pausar música" : "Reproducir música"
-    );
+    playButton.setAttribute("aria-label", isPlaying ? "Pausar música" : "Reproducir música");
     playButton.title = isPlaying ? "Pausar" : "Reproducir";
   }
 
-  async function startMusic() {
-    try {
-      await audio.play();
-      updateButton(true);
-      status.textContent = "Reproduciendo en bucle";
-    } catch (error) {
-      updateButton(false);
-
-      if (error && error.name === "NotAllowedError") {
-        status.textContent = "El navegador bloqueó el inicio automático. Haz clic o toca cualquier parte de la página para iniciar la música.";
-      } else {
-        status.textContent = "No se pudo cargar la canción. Verifica el nombre y la ubicación del MP3.";
-        console.error("No fue posible reproducir la canción:", error);
-      }
-    }
-  }
-
-  function pauseMusic() {
-    audio.pause();
-    updateButton(false);
-    status.textContent = "Música en pausa";
-  }
-
-  // Intenta reproducir al entrar a la página.
-  startMusic();
-
-  // Si el navegador bloquea el sonido automático, la primera interacción
-  // en cualquier parte de la página inicia la música.
-  let firstInteractionHandled = false;
-
-  function startAfterInteraction() {
-    if (firstInteractionHandled || !audio.paused) return;
-
-    firstInteractionHandled = true;
-    startMusic();
-
-    window.removeEventListener("pointerdown", startAfterInteraction);
-    window.removeEventListener("touchstart", startAfterInteraction);
-    window.removeEventListener("keydown", startAfterInteraction);
-  }
-
-  window.addEventListener("pointerdown", startAfterInteraction, { passive: true });
-  window.addEventListener("touchstart", startAfterInteraction, { passive: true });
-  window.addEventListener("keydown", startAfterInteraction);
-
-  playButton.addEventListener("click", () => {
+  async function togglePlay() {
     if (audio.paused) {
-      startMusic();
+      try {
+        await audio.play();
+        updatePlayingState(true);
+        status.textContent = "Reproduciendo en bucle";
+      } catch (err) {
+        updatePlayingState(false);
+        status.textContent = "No se pudo reproducir el audio";
+      }
     } else {
-      pauseMusic();
+      audio.pause();
+      updatePlayingState(false);
+      status.textContent = "En pausa";
     }
+  }
+
+  playButton.addEventListener("click", togglePlay);
+
+  minimizeButton.addEventListener("click", () => {
+    const minimized = player.classList.toggle("is-minimized");
+    minimizeButton.textContent = minimized ? "+" : "─";
+    minimizeButton.title = minimized ? "Expandir" : "Minimizar";
+    minimizeButton.setAttribute("aria-label", minimized ? "Expandir reproductor" : "Minimizar reproductor");
   });
 
   volume.addEventListener("input", () => {
@@ -628,22 +576,20 @@ footer p{margin:5px;font-size:14px}
   });
 
   audio.addEventListener("play", () => {
-    updateButton(true);
+    updatePlayingState(true);
+    status.textContent = "Reproduciendo en bucle";
   });
 
   audio.addEventListener("pause", () => {
-    updateButton(false);
-    if (!audio.ended) {
-      status.textContent = "Música en pausa";
-    }
+    updatePlayingState(false);
+    if (!audio.ended) status.textContent = "En pausa";
   });
 
   audio.addEventListener("error", () => {
-    updateButton(false);
-    status.textContent = "Error al cargar el MP3. Debe estar en la misma carpeta que index.html y conservar su nombre exacto.";
+    updatePlayingState(false);
+    status.textContent = "Audio no disponible en este enlace";
   });
 })();
 </script>
-
 </body>
 </html>
