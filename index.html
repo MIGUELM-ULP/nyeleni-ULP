@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Página educativa sobre la Declaración de Nyéléni y la soberanía alimentaria.">
+<title>Declaración de Nyéléni | Soberanía Alimentaria</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+:root{--verde:#315c3b;--verde-oscuro:#1d3928;--verde-claro:#e8f0e6;--crema:#f8f5eb;--tierra:#a66b3f;--texto:#303b32;--blanco:#fff}
+html{scroll-padding-top:85px}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--crema);color:var(--texto);line-height:1.7}
+nav{position:sticky;top:0;z-index:1000;background:var(--verde-oscuro);padding:15px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;box-shadow:0 3px 12px #0003}
+.logo{color:white;font-size:23px;font-weight:bold;letter-spacing:1px}
+nav ul{display:flex;list-style:none;gap:18px;flex-wrap:wrap}
+nav a{color:white;text-decoration:none;font-size:14px;transition:.3s}
+nav a:hover{color:#d4bd8b}
+.hero{min-height:580px;background:linear-gradient(#0f2314aa,#0f2314b3),url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1800&q=85") center/cover;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px;color:white}
+.hero-content{max-width:900px}
+.hero h1{font-size:clamp(38px,6vw,68px);margin-bottom:20px;line-height:1.15}
+.hero p{font-size:20px;max-width:750px;margin:auto}
+.hero-tag{display:inline-block;background:#d6b77b;color:#263b29;padding:8px 20px;border-radius:30px;margin-bottom:25px;font-weight:bold;letter-spacing:1px}
+.hero-button{display:inline-block;margin-top:30px;background:#d6b77b;color:#203927;padding:13px 28px;border-radius:30px;text-decoration:none;font-weight:bold;transition:.3s}
+.hero-button:hover{background:white;transform:translateY(-3px)}
+section{padding:75px 8%}
+.container{max-width:1200px;margin:auto}
+.section-title{text-align:center;margin-bottom:40px}
+.section-title span{color:var(--tierra);text-transform:uppercase;font-weight:bold;letter-spacing:2px;font-size:13px}
+.section-title h2{color:var(--verde);font-size:clamp(28px,4vw,40px);margin-top:8px}
+.section-title p{max-width:750px;margin:12px auto 0;color:#657067}
+.intro-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.intro-text h3,.colombia-text h3{color:var(--verde);font-size:26px;margin-bottom:15px}
+.intro-text p{margin-bottom:15px}
+.nyeleni-visual{position:relative;padding:14px;background:#fffefa;border:1px solid #dce5d7;border-radius:24px;box-shadow:0 12px 30px #1d39281f;overflow:hidden}
+.nyeleni-visual:before{content:"";position:absolute;width:120px;height:120px;background:#e8f0e6;border-radius:50%;top:-55px;right:-35px}
+.nyeleni-visual img{position:relative;display:block;width:100%;height:auto;max-height:390px;object-fit:contain;border-radius:15px}
+.nyeleni-caption{padding:15px 10px 7px;text-align:center}
+.nyeleni-caption h3{color:var(--verde);font-family:Georgia,serif;font-size:19px;margin-bottom:5px}
+.nyeleni-caption p{color:#68776a;font-size:13px;line-height:1.6}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:24px;align-items:stretch}
+.card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 5px 18px #00000014;transition:.3s}
+.card:hover{transform:translateY(-7px);box-shadow:0 12px 25px #00000021}
+.card-content{padding:23px}
+.card h3{color:var(--verde);margin-bottom:10px}
+.history{background:var(--verde-oscuro);color:white}
+.history .section-title h2,.history .section-title p{color:white}
+.history-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px}
+.history-item{border-left:4px solid #d6b77b;padding:20px;background:#ffffff14;border-radius:0 12px 12px 0}
+.history-item h3{color:#e4c98f;font-size:25px;margin-bottom:10px}
+.definition{background:var(--verde-claro)}
+.definition-box{max-width:950px;margin:auto;padding:40px;background:white;border-radius:18px;border-left:7px solid var(--verde);box-shadow:0 5px 20px #0000000f}
+.definition-box p{font-size:20px;text-align:center}
+.definition-box strong{color:var(--verde)}
+.principle-number{background:var(--verde);color:white;width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-weight:bold;margin-bottom:15px}
+.principle-card{background:white;padding:25px;border-radius:15px;box-shadow:0 5px 16px #00000012;border-bottom:4px solid #8b9d70;display:flex;flex-direction:column;gap:8px}
+.principle-card h3,.challenge-card h3,.objective h3,.reference h3{color:var(--verde);margin-bottom:10px}
+.objectives,.references{background:#f0eadb}
+.objective-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.objective{background:white;padding:22px;border-radius:12px;display:flex;gap:15px;align-items:flex-start}
+.objective-icon{font-size:28px}
+.objective h3{margin-bottom:5px}
+.comparison{overflow-x:auto}
+.comparison table{width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden;box-shadow:0 5px 20px #00000014}
+.comparison th{background:var(--verde);color:white;padding:18px;text-align:left}
+.comparison td{padding:17px;border-bottom:1px solid #e5e5e5}
+.comparison tr:nth-child(even){background:#f0f4ed}
+.colombia{background:var(--verde-claro)}
+.colombia-grid{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:center}
+.colombia-grid img{width:100%;height:390px;object-fit:cover;border-radius:18px;box-shadow:0 8px 25px #00000016}
+.colombia-text ul{padding-left:22px;margin-top:15px}
+.colombia-text li{margin-bottom:10px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.gallery img{width:100%;height:230px;object-fit:cover;border-radius:13px;transition:.3s}
+.gallery img:hover{transform:scale(1.03)}
+.challenge-card{background:white;padding:25px;border-radius:14px;border-top:5px solid var(--tierra);box-shadow:0 5px 15px #0000000f}
+.conclusion{background:linear-gradient(#16301de0,#16301de0),url("https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80") center/cover;color:white;text-align:center}
+.conclusion h2{font-size:38px;margin-bottom:20px}
+.conclusion p{max-width:850px;margin:auto;font-size:18px}
+.reference{background:#fffefa;border:1px solid #e5dfd0;border-left:4px solid #66845e;border-radius:13px;padding:22px 24px;margin-bottom:15px;box-shadow:0 4px 14px #1d39280b}
+.reference h3{font-size:17px}
+.reference a{display:inline-block;margin-top:10px;color:var(--verde);font-weight:bold;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+footer{background:#172c1e;color:white;text-align:center;padding:30px 15px}
+footer p{margin:5px;font-size:14px}
+.back-top{display:inline-block;margin-top:15px;color:#e4c98f;text-decoration:none}
+.academic-intro{position:relative;overflow:hidden;padding:54px 7%;background:radial-gradient(circle at 95% 5%,#85996624,transparent 25%),linear-gradient(135deg,#f7f5ec 0%,#edf2e9 100%);border-top:1px solid #e2e8dc;border-bottom:1px solid #dce5d8}
+.academic-wrap{max-width:1120px;margin:0 auto;position:relative}
+.academic-topline{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:27px}
+.academic-mark{color:#315c3b;font-size:11px;font-weight:800;letter-spacing:2.4px}
+.academic-course{color:#526b48;background:#e5ecdf;border:1px solid #d2dfca;border-radius:30px;padding:7px 13px;font-size:10px;font-weight:700;letter-spacing:1.2px}
+.academic-header{max-width:720px;margin-bottom:25px}
+.academic-kicker{color:#a66b3f;text-transform:uppercase;letter-spacing:2.2px;font-size:10px;font-weight:800;margin-bottom:7px}
+.academic-heading{color:#1d3928;font-family:Georgia,"Times New Roman",serif;font-size:clamp(25px,3vw,34px);line-height:1.2;font-weight:600;margin-bottom:8px}
+.academic-description{color:#526255;font-size:14px;line-height:1.6}
+.academic-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.academic-item{min-width:0;padding:19px 21px;background:#fffefa;border:1px solid #dce5d7;border-left:3px solid #9eaf83;border-radius:15px;box-shadow:0 4px 13px #1d39280b}
+.academic-label{display:block;margin-bottom:8px;color:#55734e;font-size:10px;line-height:1.4;letter-spacing:2px;text-transform:uppercase;font-weight:800}
+.academic-item p{color:#263b2d;font-size:16px;line-height:1.55;font-weight:600;overflow-wrap:anywhere}
+.academic-names{list-style:none;margin:0;padding:0;color:#263b2d;font-size:15px;line-height:1.7;font-weight:600}
+.academic-names li:before{content:"•";color:#8b9d70;font-weight:900;display:inline-block;width:15px}
+.academic-muted{color:#68776a;font-weight:500;font-size:14px}
+.academic-quote{grid-column:1/-1;padding:23px 26px;background:#e6eddf;border:1px solid #cbd9c3;border-left:5px solid #66845e;border-radius:15px}
+.academic-quote p{color:#233b2a;font-family:Georgia,"Times New Roman",serif;font-size:clamp(17px,2vw,21px);line-height:1.55;font-weight:600}
+@media(max-width:800px){nav{justify-content:center}nav ul{justify-content:center}.intro-grid,.colombia-grid{grid-template-columns:1fr}section{padding:55px 6%}.hero{min-height:500px}.definition-box{padding:25px}.academic-intro{padding:45px 6%}.academic-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){nav ul{gap:10px}nav a{font-size:12px}.hero p{font-size:17px}.comparison table{min-width:650px}.academic-grid{grid-template-columns:1fr}.academic-quote{grid-column:auto}.academic-topline{align-items:flex-start;flex-direction:column}.academic-item,.academic-quote{padding:18px}}
+
+
+/* REPRODUCTOR MUSICAL NYÉLÉNI */
+.music-player {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 2000;
+  width: min(340px, calc(100vw - 28px));
+  padding: 15px;
+  color: #fff;
+  background: linear-gradient(135deg, #1d3928, #315c3b);
+  border: 1px solid #ffffff2b;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px #0004;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.music-player-top {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 12px;
+}
+
+.music-player-art {
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  color: #1d3928;
+  background: #d6b77b;
+  font-size: 21px;
+}
+
+.music-player-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.music-player-label {
+  color: #e4c98f;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.music-player-title {
+  margin-top: 3px;
+  overflow: hidden;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.music-player-status {
+  margin-top: 3px;
+  color: #dce8dc;
+  font-size: 11px;
+}
+
+.music-player-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.music-player-controls button {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #ffffff35;
+  border-radius: 50%;
+  color: #fff;
+  background: #ffffff16;
+  font-size: 15px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.music-player-controls button:hover {
+  color: #1d3928;
+  background: #d6b77b;
+  transform: translateY(-2px);
+}
+
+.music-player-controls #musicPlay {
+  width: 46px;
+  height: 46px;
+  border: 0;
+  color: #203927;
+  background: #d6b77b;
+  font-size: 18px;
+}
+
+.music-player-controls #musicPlay:hover {
+  background: #fff;
+}
+
+.music-volume {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 12px;
+  color: #e9eee8;
+  font-size: 12px;
+}
+
+.music-volume input {
+  width: 100%;
+  accent-color: #d6b77b;
+  cursor: pointer;
+}
+
+@media (max-width: 520px) {
+  .music-player {
+    right: 12px;
+    bottom: 12px;
+    padding: 12px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- REPRODUCTOR MUSICAL NYÉLÉNI: canción Lofi Chill -->
+<aside class="music-player" aria-label="Reproductor de música ambiental">
+  <div class="music-player-top">
+    <div class="music-player-art" aria-hidden="true">♫</div>
+    <div class="music-player-info">
+      <div class="music-player-label">Ambiente Nyéléni</div>
+      <div class="music-player-title" id="musicTrackTitle">Lofi chill instrumental</div>
+      <div class="music-player-status" id="musicStatus" aria-live="polite">Intentando iniciar la música automáticamente…</div>
+    </div>
+  </div>
+
+  <div class="music-player-controls">
+    <button type="button" id="musicPlay" aria-label="Reproducir música" title="Reproducir">▶</button>
+  </div>
+
+  <label class="music-volume" for="musicVolume">
+    <span aria-hidden="true">🔉</span>
+    <span>Volumen</span>
+    <input id="musicVolume" type="range" min="0" max="1" step="0.05" value="0.25">
+  </label>
+
+  <audio id="backgroundMusic" src="ambiente-nyeleni.mp3" autoplay loop preload="auto" playsinline></audio>
+</aside>
+
+
+<nav>
+  <div class="logo">NYÉLÉNI 2007</div>
+  <ul>
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#introduccion">Introducción</a></li>
+    <li><a href="#historia">Origen</a></li>
+    <li><a href="#concepto">Concepto</a></li>
+    <li><a href="#principios">Principios</a></li>
+    <li><a href="#colombia">Colombia</a></li>
+    <li><a href="#bibliografia">Bibliografía</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-content">
+    <span class="hero-tag">ALIMENTACIÓN • TERRITORIO • JUSTICIA SOCIAL</span>
+    <h1>Declaración de Nyéléni</h1>
+    <p>La soberanía alimentaria como derecho de los pueblos a decidir sus propios sistemas de producción, distribución y consumo de alimentos.</p>
+    <a href="#introduccion" class="hero-button">Explorar contenido</a>
+  </div>
+</header>
+
+<section class="academic-intro" id="equipo">
+  <div class="academic-wrap">
+    <div class="academic-topline">
+      <span class="academic-mark">NYÉLÉNI · 2007</span>
+      <span class="academic-course">ANTROPOLOGÍA DE LA ALIMENTACIÓN</span>
+    </div>
+    <div class="academic-header">
+      <p class="academic-kicker">UNIVERSIDAD LIBRE · PEREIRA</p>
+      <h2 class="academic-heading">Un trabajo para pensar cómo nos alimentamos</h2>
+      <p class="academic-description">Presentación académica sobre la Declaración de Nyéléni y la soberanía alimentaria.</p>
+    </div>
+    <div class="academic-grid">
+      <article class="academic-item">
+        <span class="academic-label">Integrantes</span>
+        <ul class="academic-names">
+          <li>Juan Esteban Bonilla</li>
+          <li>Miguel Ángel Moscoso</li>
+          <li>Santiago Buitrago Monroy</li>
+          <li>Sofía Maturana Hinestrosa</li>
+        </ul>
+      </article>
+      <article class="academic-item">
+        <span class="academic-label">Asignatura</span>
+        <p>Antropología de la Alimentación</p>
+      </article>
+      <article class="academic-item">
+        <span class="academic-label">Docente</span>
+        <p>Luis Felipe Giraldo</p>
+      </article>
+      <article class="academic-item">
+        <span class="academic-label">Universidad</span>
+        <p>Universidad Libre<br><span class="academic-muted">Pereira</span></p>
+      </article>
+      <article class="academic-item">
+        <span class="academic-label">Fecha</span>
+        <p>30 de noviembre de 2026</p>
+      </article>
+      <article class="academic-quote">
+        <span class="academic-label">Una idea para recordar</span>
+        <p>«Alimentar a un pueblo no es solo producir más alimentos: es decidir juntos qué comemos, quién los produce y cómo cuidamos la tierra que los hace posibles».</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="introduccion">
+  <div class="container">
+    <div class="section-title">
+      <span>Conociendo la declaración</span>
+      <h2>¿Qué es la Declaración de Nyéléni?</h2>
+      <p>Una propuesta colectiva que busca transformar la manera en que se producen, distribuyen y consumen los alimentos en el mundo.</p>
+    </div>
+    <div class="intro-grid">
+      <div class="intro-text">
+        <h3>Un movimiento por el derecho a decidir</h3>
+        <p>La Declaración de Nyéléni es un documento construido por organizaciones campesinas, indígenas, pescadores, trabajadores rurales, mujeres y diferentes movimientos sociales comprometidos con la soberanía alimentaria.</p>
+        <p>Su propósito principal es defender el derecho de los pueblos a decidir cómo producir sus alimentos, qué alimentos consumir y cómo organizar sus propios sistemas alimentarios.</p>
+        <p>También promueve una agricultura sostenible, el respeto por la biodiversidad, la protección de los territorios y el reconocimiento del trabajo de las comunidades productoras de alimentos.</p>
+      </div>
+      <div class="nyeleni-visual">
+        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000&q=85" alt="Paisaje agrícola relacionado con la soberanía alimentaria">
+        <div class="nyeleni-caption">
+          <h3>Nyéléni: unidos por la soberanía alimentaria</h3>
+          <p>Campesinos, comunidades indígenas, pescadores y organizaciones sociales unidos por el derecho de los pueblos a decidir sus sistemas alimentarios.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="history" id="historia">
+  <div class="container">
+    <div class="section-title">
+      <span>Antecedentes históricos</span>
+      <h2>Origen de Nyéléni</h2>
+      <p>El encuentro internacional que fortaleció el movimiento mundial por la soberanía alimentaria.</p>
+    </div>
+    <div class="history-grid">
+      <div class="history-item">
+        <h3>1996</h3>
+        <p>La Vía Campesina presenta el concepto de soberanía alimentaria durante la Cumbre Mundial sobre la Alimentación en Roma.</p>
+      </div>
+      <div class="history-item">
+        <h3>2007</h3>
+        <p>Se realiza el Foro Mundial por la Soberanía Alimentaria en Sélingué, Malí, del 23 al 27 de febrero.</p>
+      </div>
+      <div class="history-item">
+        <h3>500+</h3>
+        <p>Participaron más de 500 representantes de organizaciones y movimientos sociales provenientes de más de 80 países.</p>
+      </div>
+      <div class="history-item">
+        <h3>Resultado</h3>
+        <p>El encuentro permitió construir una visión colectiva y fortalecer las propuestas de soberanía alimentaria.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="definition" id="concepto">
+  <div class="container">
+    <div class="section-title">
+      <span>Concepto fundamental</span>
+      <h2>¿Qué es la soberanía alimentaria?</h2>
+    </div>
+    <div class="definition-box">
+      <p>La soberanía alimentaria es el <strong>derecho de los pueblos a alimentos nutritivos, culturalmente adecuados, accesibles y producidos de forma sostenible</strong>, así como el derecho a decidir sus propios sistemas alimentarios y productivos.</p>
+    </div>
+  </div>
+</section>
+
+<section id="principios">
+  <div class="container">
+    <div class="section-title">
+      <span>Fundamentos principales</span>
+      <h2>Principios de la soberanía alimentaria</h2>
+      <p>La Declaración de Nyéléni propone una transformación de los sistemas alimentarios basada en la justicia, la participación y la sostenibilidad.</p>
+    </div>
+    <div class="cards">
+      <div class="principle-card">
+        <div class="principle-number">1</div>
+        <h3>Alimentos para los pueblos</h3>
+        <p>Las necesidades alimentarias de las personas deben estar por encima de los intereses comerciales.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-number">2</div>
+        <h3>Valorar a los productores</h3>
+        <p>Reconocer y proteger el trabajo de campesinos, agricultores familiares, pescadores y comunidades rurales.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-number">3</div>
+        <h3>Sistemas alimentarios locales</h3>
+        <p>Fortalecer los mercados locales y acercar a quienes producen los alimentos con quienes los consumen.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-number">4</div>
+        <h3>Control local</h3>
+        <p>Defender el acceso de las comunidades a la tierra, el agua, las semillas y los recursos naturales.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-number">5</div>
+        <h3>Conocimientos y saberes</h3>
+        <p>Respetar los conocimientos tradicionales y promover prácticas agrícolas sostenibles.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-number">6</div>
+        <h3>Trabajo con la naturaleza</h3>
+        <p>Promover métodos de producción que protejan los ecosistemas y la biodiversidad.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="objectives" id="objetivos">
+  <div class="container">
+    <div class="section-title">
+      <span>Propósitos del movimiento</span>
+      <h2>Objetivos principales</h2>
+    </div>
+    <div class="objective-list">
+      <div class="objective">
+        <div class="objective-icon">🌱</div>
+        <div><h3>Producción sostenible</h3><p>Impulsar prácticas agrícolas que cuiden el suelo, el agua y los ecosistemas.</p></div>
+      </div>
+      <div class="objective">
+        <div class="objective-icon">🌾</div>
+        <div><h3>Protección campesina</h3><p>Reconocer los derechos y el trabajo de las comunidades productoras.</p></div>
+      </div>
+      <div class="objective">
+        <div class="objective-icon">🌍</div>
+        <div><h3>Autonomía alimentaria</h3><p>Fortalecer la capacidad de los pueblos para decidir sus sistemas alimentarios.</p></div>
+      </div>
+      <div class="objective">
+        <div class="objective-icon">🤝</div>
+        <div><h3>Justicia social</h3><p>Promover condiciones dignas para productores, trabajadores y consumidores.</p></div>
+      </div>
+      <div class="objective">
+        <div class="objective-icon">🌽</div>
+        <div><h3>Protección de semillas</h3><p>Defender la diversidad de semillas y los conocimientos tradicionales.</p></div>
+      </div>
+      <div class="objective">
+        <div class="objective-icon">♻️</div>
+        <div><h3>Consumo responsable</h3><p>Fomentar el consumo de alimentos locales, nutritivos y culturalmente apropiados.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="comparacion">
+  <div class="container">
+    <div class="section-title">
+      <span>Dos conceptos relacionados</span>
+      <h2>Seguridad alimentaria y soberanía alimentaria</h2>
+      <p>Ambos conceptos se relacionan con el derecho a la alimentación, pero tienen enfoques diferentes.</p>
+    </div>
+    <div class="comparison">
+      <table>
+        <thead>
+          <tr><th>Aspecto</th><th>Seguridad alimentaria</th><th>Soberanía alimentaria</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Enfoque</td>
+            <td>Busca que todas las personas tengan acceso físico y económico a alimentos suficientes.</td>
+            <td>Defiende el derecho de los pueblos a decidir cómo organizar sus sistemas alimentarios.</td>
+          </tr>
+          <tr>
+            <td>Producción</td>
+            <td>Se interesa por la disponibilidad y el acceso a los alimentos.</td>
+            <td>Prioriza la producción sostenible y local, respetando las culturas y los territorios.</td>
+          </tr>
+          <tr>
+            <td>Productores</td>
+            <td>Considera la disponibilidad de alimentos para la población.</td>
+            <td>Destaca los derechos de campesinos, pescadores y productores locales.</td>
+          </tr>
+          <tr>
+            <td>Decisiones</td>
+            <td>Se concentra en garantizar el acceso a una alimentación adecuada.</td>
+            <td>Promueve la participación de las comunidades en las decisiones alimentarias.</td>
+          </tr>
+          <tr>
+            <td>Objetivo</td>
+            <td>Garantizar que las personas puedan alimentarse.</td>
+            <td>Garantizar el derecho a decidir cómo producir y consumir alimentos.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="colombia" id="colombia">
+  <div class="container">
+    <div class="section-title">
+      <span>Contexto nacional</span>
+      <h2>Importancia de Nyéléni para Colombia</h2>
+    </div>
+    <div class="colombia-grid">
+      <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000&q=85" alt="Paisaje agrícola colombiano">
+      <div class="colombia-text">
+        <h3>El campo colombiano y la alimentación</h3>
+        <p>La soberanía alimentaria tiene especial importancia para Colombia debido a su diversidad agrícola, cultural y ambiental. El país cuenta con comunidades campesinas, indígenas y afrodescendientes que conservan conocimientos tradicionales relacionados con la producción y el consumo de alimentos.</p>
+        <p>La propuesta de Nyéléni permite reflexionar sobre la necesidad de fortalecer la agricultura familiar, proteger los territorios y mejorar las condiciones de vida de quienes producen los alimentos.</p>
+        <ul>
+          <li>Apoyar a los pequeños productores.</li>
+          <li>Proteger las semillas nativas y criollas.</li>
+          <li>Fortalecer los mercados campesinos.</li>
+          <li>Promover la agroecología.</li>
+          <li>Proteger el agua y la biodiversidad.</li>
+          <li>Reconocer los saberes de las comunidades rurales.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="galeria">
+  <div class="container">
+    <div class="section-title">
+      <span>Imágenes relacionadas</span>
+      <h2>La soberanía alimentaria en imágenes</h2>
+      <p>La producción de alimentos, el trabajo campesino, los mercados locales y la protección ambiental son elementos fundamentales de este movimiento.</p>
+    </div>
+    <div class="gallery">
+      <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=85" alt="Campo agrícola">
+      <img src="https://images.unsplash.com/photo-1499529112087-3cb3b73cec95?auto=format&fit=crop&w=800&q=85" alt="Cultivos y agricultura">
+      <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=85" alt="Alimentos frescos">
+      <img src="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=800&q=85" alt="Producción agrícola">
+      <img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=800&q=85" alt="Mercado de alimentos">
+      <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&w=800&q=85" alt="Agricultura y cosecha">
+    </div>
+  </div>
+</section>
+
+<section id="desafios">
+  <div class="container">
+    <div class="section-title">
+      <span>Retos actuales</span>
+      <h2>Desafíos de la soberanía alimentaria</h2>
+      <p>Para avanzar hacia sistemas alimentarios más justos es necesario enfrentar diferentes dificultades.</p>
+    </div>
+    <div class="cards">
+      <div class="challenge-card">
+        <h3>Concentración de tierras</h3>
+        <p>La desigualdad en el acceso a la tierra limita las posibilidades de producción de muchas comunidades campesinas.</p>
+      </div>
+      <div class="challenge-card">
+        <h3>Cambio climático</h3>
+        <p>Las sequías, inundaciones y cambios de temperatura afectan los cultivos y la disponibilidad de alimentos.</p>
+      </div>
+      <div class="challenge-card">
+        <h3>Desigualdad económica</h3>
+        <p>Muchos pequeños productores enfrentan dificultades para comercializar sus productos y obtener ingresos justos.</p>
+      </div>
+      <div class="challenge-card">
+        <h3>Pérdida de biodiversidad</h3>
+        <p>La reducción de variedades agrícolas y el deterioro ambiental amenazan la diversidad alimentaria.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="conclusion" id="conclusiones">
+  <div class="container">
+    <h2>Conclusiones</h2>
+    <p>La Declaración de Nyéléni representa una propuesta importante para construir sistemas alimentarios más justos, sostenibles y participativos. Su planteamiento reconoce que la alimentación no debe entenderse únicamente como una actividad comercial, sino como un derecho relacionado con la cultura, la salud, el territorio y la vida de las comunidades.<br><br>Asimismo, permite comprender la importancia de proteger el trabajo campesino, conservar los recursos naturales y fortalecer la producción local. En Colombia, estos principios invitan a valorar la agricultura familiar, los conocimientos tradicionales y la diversidad de nuestros territorios.</p>
+  </div>
+</section>
+
+<section class="references" id="bibliografia">
+  <div class="container">
+    <div class="section-title">
+      <span>Fuentes de consulta</span>
+      <h2>Bibliografía</h2>
+      <p>Fuentes utilizadas para desarrollar y complementar la información presentada en esta página.</p>
+    </div>
+    <div class="reference">
+      <h3>1. Declaración oficial de Nyéléni (2007)</h3>
+      <p>Foro Mundial por la Soberanía Alimentaria. (2007). <em>Declaración de Nyéléni.</em> Sélingué, Malí.</p>
+      <a href="https://nyeleni.org/es/declaracion-de-nyeleni/" target="_blank" rel="noopener">Consultar declaración oficial →</a>
+    </div>
+    <div class="reference">
+      <h3>2. Movimiento internacional por la soberanía alimentaria</h3>
+      <p>Nyéléni. (s. f.). <em>Movimiento internacional por la soberanía alimentaria.</em></p>
+      <a href="https://nyeleni.org/es/international-movement-es/" target="_blank" rel="noopener">Consultar información →</a>
+    </div>
+    <div class="reference">
+      <h3>3. Seguridad alimentaria: documento técnico de la FAO</h3>
+      <p>Organización de las Naciones Unidas para la Alimentación y la Agricultura (FAO). (2011). <em>Una introducción a los conceptos básicos de la seguridad alimentaria.</em></p>
+      <a href="https://www.fao.org/3/al936s/al936s00.pdf" target="_blank" rel="noopener">Consultar documento PDF oficial de la FAO →</a>
+    </div>
+    <div class="reference">
+      <h3>4. Soberanía alimentaria y agroecología</h3>
+      <p>Organización de las Naciones Unidas para la Alimentación y la Agricultura (FAO). (s. f.). <em>Soberanía alimentaria y agroecología.</em></p>
+      <a href="https://www.fao.org/agroecology/new-knowledge-module/multimedia/detail/soberania-alimentaria-y-agroecolog%C3%ADa/en" target="_blank" rel="noopener">Consultar recurso de la FAO →</a>
+    </div>
+    <div class="reference">
+      <h3>5. Más sobre la soberanía alimentaria</h3>
+      <p>Nyéléni. (s. f.). <em>Más sobre la soberanía alimentaria.</em></p>
+      <a href="https://nyeleni.org/es/mas-sobre-la-soberania-alimentaria/" target="_blank" rel="noopener">Consultar información complementaria →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>DECLARACIÓN DE NYÉLÉNI — SOBERANÍA ALIMENTARIA</strong></p>
+  <p>Una alimentación digna, sostenible y justa es un derecho de todos los pueblos.</p>
+  <p>Material educativo e informativo.</p>
+  <a href="#inicio" class="back-top">Volver al inicio ↑</a>
+</footer>
+
+
+<script>
+(() => {
+  const audio = document.getElementById("backgroundMusic");
+  const playButton = document.getElementById("musicPlay");
+  const status = document.getElementById("musicStatus");
+  const volume = document.getElementById("musicVolume");
+
+  // La canción debe estar en la misma carpeta que este archivo HTML.
+  audio.src = "ambiente-nyeleni.mp3";
+  audio.loop = true;
+  audio.autoplay = true;
+  audio.preload = "auto";
+  audio.volume = Number(volume.value);
+
+  function updatePlayingState(isPlaying) {
+    playButton.textContent = isPlaying ? "❚❚" : "▶";
+    playButton.setAttribute(
+      "aria-label",
+      isPlaying ? "Pausar música" : "Reproducir música"
+    );
+    playButton.title = isPlaying ? "Pausar" : "Reproducir";
+  }
+
+  async function startMusic() {
+    try {
+      await audio.play();
+      updatePlayingState(true);
+      status.textContent = "Reproduciendo automáticamente";
+    } catch (error) {
+      updatePlayingState(false);
+      if (error && error.name === "NotAllowedError") {
+        status.textContent = "El navegador bloqueó el sonido automático. Toca o haz clic en cualquier parte de la página para activarlo.";
+      } else {
+        status.textContent = "No se pudo cargar la canción. Revisa el archivo MP3.";
+        console.error("No fue posible reproducir la canción:", error);
+      }
+    }
+  }
+
+  function pauseMusic() {
+    audio.pause();
+    updatePlayingState(false);
+    status.textContent = "Música en pausa";
+  }
+
+  // Intento de reproducción apenas se carga la página.
+  startMusic();
+
+  // Si el navegador bloquea el autoplay con sonido, el primer toque/clic
+  // o tecla en cualquier lugar de la página inicia la música, sin exigir
+  // que la persona encuentre o pulse el botón del reproductor.
+  let firstInteractionHandled = false;
+  function startAfterFirstInteraction() {
+    if (firstInteractionHandled || !audio.paused) return;
+    firstInteractionHandled = true;
+    startMusic();
+    window.removeEventListener("pointerdown", startAfterFirstInteraction);
+    window.removeEventListener("touchstart", startAfterFirstInteraction);
+    window.removeEventListener("keydown", startAfterFirstInteraction);
+  }
+  window.addEventListener("pointerdown", startAfterFirstInteraction, { passive: true });
+  window.addEventListener("touchstart", startAfterFirstInteraction, { passive: true });
+  window.addEventListener("keydown", startAfterFirstInteraction);
+
+  playButton.addEventListener("click", () => {
+    if (audio.paused) startMusic();
+    else pauseMusic();
+  });
+
+  volume.addEventListener("input", () => {
+    audio.volume = Number(volume.value);
+  });
+
+  audio.addEventListener("play", () => {
+    updatePlayingState(true);
+    status.textContent = "Reproduciendo";
+  });
+
+  audio.addEventListener("pause", () => {
+    updatePlayingState(false);
+    if (!audio.ended) status.textContent = "Música en pausa";
+  });
+
+  audio.addEventListener("error", () => {
+    updatePlayingState(false);
+    status.textContent = "Error al cargar el MP3. Verifica que esté junto a index.html y conserve su nombre.";
+  });
+})();
+</script>
+
+</body>
+</html>
