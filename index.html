@@ -103,7 +103,7 @@ footer p{margin:5px;font-size:14px}
 @media(max-width:800px){nav{justify-content:center}nav ul{justify-content:center}.intro-grid,.colombia-grid{grid-template-columns:1fr}section{padding:55px 6%}.hero{min-height:500px}.definition-box{padding:25px}.academic-intro{padding:45px 6%}.academic-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){nav ul{gap:10px}nav a{font-size:12px}.hero p{font-size:17px}.comparison table{min-width:650px}.academic-grid{grid-template-columns:1fr}.academic-quote{grid-column:auto}.academic-topline{align-items:flex-start;flex-direction:column}.academic-item,.academic-quote{padding:18px}}
 
-/* REPRODUCTOR MUSICAL NYÉLÉNI (COMPACTO Y CUADRADO) */
+/* REPRODUCTOR MUSICAL NYÉLÉNI */
 .music-player{position:fixed;right:18px;bottom:18px;z-index:2000;width:min(285px,calc(100vw - 24px));padding:12px 14px;color:#fff;background:linear-gradient(135deg,#1d3928,#315c3b);border:1px solid #ffffff2b;border-radius:16px;box-shadow:0 8px 24px #00000045;font-family:Arial,Helvetica,sans-serif}
 .music-player.is-minimized{width:auto;padding:8px 12px;border-radius:999px}
 .music-player.is-minimized .music-player-body{display:none}
@@ -146,12 +146,6 @@ footer p{margin:5px;font-size:14px}
       <input id="musicVolume" type="range" min="0" max="1" step="0.05" value="0.25">
     </label>
   </div>
-
-  <!-- Primero intenta archivo local ambiente-nyeleni.mp3; si no existe en GitHub, usa pista instrumental de respaldo -->
-  <audio id="backgroundMusic" loop preload="metadata" playsinline>
-    <source src="ambiente-nyeleni.mp3" type="audio/mpeg">
-    <source src="https://upload.wikimedia.org/wikipedia/commons/transcoded/4/45/Gymnop%C3%A9die_No._1.ogg/Gymnop%C3%A9die_No._1.ogg.mp3" type="audio/mpeg">
-  </audio>
 </aside>
 
 <nav>
@@ -531,38 +525,110 @@ footer p{margin:5px;font-size:14px}
 <script>
 (() => {
   const player = document.getElementById("musicPlayer");
-  const audio = document.getElementById("backgroundMusic");
   const playButton = document.getElementById("musicPlay");
   const minimizeButton = document.getElementById("musicMinimize");
   const status = document.getElementById("musicStatus");
   const volume = document.getElementById("musicVolume");
 
-  audio.volume = Number(volume.value);
+  let ctx = null;
+  let masterGain = null;
+  let timerId = null;
+  let isPlaying = false;
+  let step = 0;
 
-  function updatePlayingState(isPlaying) {
-    playButton.textContent = isPlaying ? "❚❚" : "▶";
-    playButton.setAttribute("aria-label", isPlaying ? "Pausar música" : "Reproducir música");
-    playButton.title = isPlaying ? "Pausar" : "Reproducir";
-  }
+  // Progresión lo-fi suave en Fmaj7 -> Em7 -> Dm7 -> Cmaj7 (en Hz)
+  const chords = [
+    [174.61, 220.00, 261.63, 329.63], // Fmaj7
+    [164.81, 196.00, 246.94, 293.66], // Em7
+    [146.83, 174.61, 220.00, 261.63], // Dm7
+    [130.81, 164.81, 196.00, 246.94]  // Cmaj7
+  ];
 
-  async function togglePlay() {
-    if (audio.paused) {
-      try {
-        await audio.play();
-        updatePlayingState(true);
-        status.textContent = "Reproduciendo en bucle";
-      } catch (err) {
-        updatePlayingState(false);
-        status.textContent = "No se pudo reproducir el audio";
-      }
-    } else {
-      audio.pause();
-      updatePlayingState(false);
-      status.textContent = "En pausa";
+  const melodyNotes = [
+    329.63, 392.00, 440.00, 392.00,
+    293.66, 329.63, 392.00, 329.63,
+    261.63, 293.66, 349.23, 329.63,
+    246.94, 261.63, 329.63, 293.66
+  ];
+
+  function ensureAudio() {
+    if (!ctx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      ctx = new AudioCtx();
+      masterGain = ctx.createGain();
+      masterGain.gain.value = Number(volume.value) * 0.25;
+      masterGain.connect(ctx.destination);
+    }
+    if (ctx.state === "suspended") {
+      ctx.resume();
     }
   }
 
-  playButton.addEventListener("click", togglePlay);
+  function playSoftNote(freq, duration, type = "sine", peakGain = 0.14) {
+    if (!ctx || !masterGain) return;
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const filter = ctx.createBiquadFilter();
+    const gain = ctx.createGain();
+
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, now);
+
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(1150, now);
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.linearRampToValueAtTime(peakGain, now + 0.08);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(masterGain);
+
+    osc.start(now);
+    osc.stop(now + duration + 0.05);
+  }
+
+  function tick() {
+    if (!isPlaying) return;
+    const chordIndex = Math.floor(step / 4) % chords.length;
+    if (step % 4 === 0) {
+      chords[chordIndex].forEach(f => playSoftNote(f, 2.3, "triangle", 0.065));
+    }
+    const note = melodyNotes[step % melodyNotes.length];
+    playSoftNote(note, 0.75, "sine", 0.11);
+    step++;
+  }
+
+  function updateUI(playing) {
+    isPlaying = playing;
+    playButton.textContent = playing ? "❚❚" : "▶";
+    playButton.setAttribute("aria-label", playing ? "Pausar música" : "Reproducir música");
+    playButton.title = playing ? "Pausar" : "Reproducir";
+    status.textContent = playing ? "Reproduciendo en bucle" : "En pausa";
+  }
+
+  function startPlayback() {
+    ensureAudio();
+    updateUI(true);
+    tick();
+    clearInterval(timerId);
+    timerId = setInterval(tick, 620);
+  }
+
+  function stopPlayback() {
+    clearInterval(timerId);
+    timerId = null;
+    updateUI(false);
+  }
+
+  playButton.addEventListener("click", () => {
+    if (isPlaying) {
+      stopPlayback();
+    } else {
+      startPlayback();
+    }
+  });
 
   minimizeButton.addEventListener("click", () => {
     const minimized = player.classList.toggle("is-minimized");
@@ -572,22 +638,9 @@ footer p{margin:5px;font-size:14px}
   });
 
   volume.addEventListener("input", () => {
-    audio.volume = Number(volume.value);
-  });
-
-  audio.addEventListener("play", () => {
-    updatePlayingState(true);
-    status.textContent = "Reproduciendo en bucle";
-  });
-
-  audio.addEventListener("pause", () => {
-    updatePlayingState(false);
-    if (!audio.ended) status.textContent = "En pausa";
-  });
-
-  audio.addEventListener("error", () => {
-    updatePlayingState(false);
-    status.textContent = "Audio no disponible en este enlace";
+    if (masterGain && ctx) {
+      masterGain.gain.setTargetAtTime(Number(volume.value) * 0.25, ctx.currentTime, 0.03);
+    }
   });
 })();
 </script>
